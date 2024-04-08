@@ -1,0 +1,28 @@
+const options = {
+  url: `https://api2.ecomailapp.cz/lists/${bundle.inputData.cislo_listu}/subscribe`,
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    'key': bundle.authData.key
+  },
+body: JSON.stringify({
+  'subscriber_data': {
+    'email': bundle.inputData.email,
+    'name': bundle.inputData.name, // Případná změna na 'first_name' podle dokumentace API
+    'surname': bundle.inputData.surname, // Případná změna na 'last_name' podle dokumentace API
+    
+    // Další potřebná data dle dokumentace
+  },
+  'trigger_autoresponders': bundle.inputData.automations,
+  'update_existing': true,
+})
+}
+
+return z.request(options)
+  .then((response) => {
+    response.throwForStatus();
+    const results = response.json;
+
+    return results;
+  });
