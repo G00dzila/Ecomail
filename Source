@@ -1,0 +1,286 @@
+{
+  "version": "1.0.0",
+  "platformVersion": "15.5.3",
+  "authentication": {
+    "type": "custom",
+    "test": {
+      "source": "const options = {\r\n  url: 'https://api2.ecomailapp.cz/domains', // nahraďte 'endpoint' konkrétním endpointem\r\n  method: 'GET', // nebo 'POST', podle toho, co chcete dělat\r\n  headers: {\r\n    'Content-Type': 'application/json',\r\n    'key': bundle.authData.key // tady se vloží API klíč uživatele\r\n  },\r\n  // ... tělo požadavku, pokud je potřeba\r\n};\r\n\r\nreturn z.request(options)\r\n  .then((response) => {\r\n    response.throwForStatus();\r\n    return response.json;\r\n  });\r\n"
+    },
+    "fields": [
+      {
+        "computed": false,
+        "key": "key",
+        "required": false,
+        "label": "API Klíč",
+        "type": "password"
+      }
+    ],
+    "customConfig": {},
+    "connectionLabel": ""
+  },
+  "triggers": {
+    "list_id": {
+      "operation": {
+        "perform": {
+          "headers": {
+            "X-KEY": "{{bundle.authData.key}}"
+          },
+          "params": {
+            "key": "{{bundle.authData.key}}"
+          },
+          "url": "https://api2.ecomailapp.cz/lists/"
+        },
+        "outputFields": [
+          {
+            "key": "id",
+            "type": "number"
+          },
+          {
+            "key": "name",
+            "type": "string"
+          }
+        ]
+      },
+      "display": {
+        "description": "Ukázaní seznamu kontaktů",
+        "hidden": false,
+        "label": "Seznam Kontaktů"
+      },
+      "key": "list_id",
+      "noun": "Kontaky"
+    }
+  },
+  "creates": {
+    "subscribe": {
+      "display": {
+        "description": "Vytvoření nového předplatitele",
+        "hidden": false,
+        "label": "Vytvoření nového zákazníka"
+      },
+      "key": "subscribe",
+      "noun": "Zákazník",
+      "operation": {
+        "inputFields": [
+          {
+            "key": "cislo_listu",
+            "label": "Číslo listu",
+            "type": "string",
+            "dynamic": "list_id.id.name",
+            "required": true,
+            "list": false,
+            "altersDynamicFields": false
+          },
+          {
+            "key": "name",
+            "label": "Jméno zákazníka",
+            "type": "string",
+            "required": false,
+            "list": false,
+            "altersDynamicFields": false
+          },
+          {
+            "key": "surname",
+            "label": "Příjmení zákazníka",
+            "type": "string",
+            "required": false,
+            "list": false,
+            "altersDynamicFields": false
+          },
+          {
+            "key": "email",
+            "label": "E-mail",
+            "type": "string",
+            "required": true,
+            "list": false,
+            "altersDynamicFields": false
+          },
+          {
+            "key": "phone",
+            "label": "Telefonní číslo",
+            "type": "string",
+            "required": false,
+            "list": false,
+            "altersDynamicFields": false
+          }
+        ],
+        "outputFields": [
+          {
+            "key": "id"
+          },
+          {
+            "key": "name"
+          },
+          {
+            "key": "surname"
+          },
+          {
+            "key": "email"
+          },
+          {
+            "key": "gender"
+          },
+          {
+            "key": "vokativ"
+          },
+          {
+            "key": "bounce_soft"
+          },
+          {
+            "key": "bounce_soft_count"
+          },
+          {
+            "key": "bounced_hard"
+          },
+          {
+            "key": "bounce_message"
+          },
+          {
+            "key": "inserted_at"
+          },
+          {
+            "key": "last_position"
+          },
+          {
+            "key": "rating"
+          },
+          {
+            "key": "pipl"
+          },
+          {
+            "key": "nameday"
+          },
+          {
+            "key": "source"
+          },
+          {
+            "key": "company"
+          },
+          {
+            "key": "street"
+          },
+          {
+            "key": "city"
+          },
+          {
+            "key": "country"
+          },
+          {
+            "key": "zip"
+          },
+          {
+            "key": "phone"
+          },
+          {
+            "key": "pretitle"
+          },
+          {
+            "key": "surtitle"
+          },
+          {
+            "key": "birthday"
+          },
+          {
+            "key": "notes"
+          },
+          {
+            "key": "vokativ_s"
+          },
+          {
+            "key": "optimized_delivery"
+          },
+          {
+            "key": "pageviews"
+          },
+          {
+            "key": "webevents"
+          },
+          {
+            "key": "last_delivery"
+          },
+          {
+            "key": "last_open"
+          },
+          {
+            "key": "last_click"
+          },
+          {
+            "key": "last_pageview"
+          },
+          {
+            "key": "last_transaction_id"
+          },
+          {
+            "key": "raynet_id"
+          },
+          {
+            "key": "last_transaction"
+          },
+          {
+            "key": "automations"
+          },
+          {
+            "key": "sends_since_open"
+          },
+          {
+            "key": "sends_since_click"
+          },
+          {
+            "key": "skips"
+          },
+          {
+            "key": "already_subscribed"
+          }
+        ],
+        "sample": {
+          "id": 884,
+          "name": null,
+          "surname": null,
+          "email": "test15@test.cz",
+          "gender": null,
+          "vokativ": null,
+          "bounce_soft": 0,
+          "bounce_soft_count": 0,
+          "bounced_hard": 0,
+          "bounce_message": null,
+          "inserted_at": "2024-03-02 22:04:35",
+          "last_position": null,
+          "rating": 2.5,
+          "pipl": null,
+          "nameday": null,
+          "source": "api",
+          "company": null,
+          "street": null,
+          "city": null,
+          "country": "CZ",
+          "zip": null,
+          "phone": null,
+          "pretitle": null,
+          "surtitle": null,
+          "birthday": null,
+          "notes": null,
+          "vokativ_s": null,
+          "optimized_delivery": null,
+          "tags": [],
+          "pageviews": null,
+          "webevents": null,
+          "last_delivery": null,
+          "last_open": null,
+          "last_click": null,
+          "last_pageview": null,
+          "last_transaction_id": null,
+          "raynet_id": null,
+          "last_transaction": null,
+          "automations": null,
+          "sends_since_open": null,
+          "sends_since_click": null,
+          "skips": null,
+          "already_subscribed": false
+        },
+        "perform": {
+          "source": "const options = {\r\n  url: `https://api2.ecomailapp.cz/lists/${bundle.inputData.cislo_listu}/subscribe`,\r\n  method: 'POST',\r\n  headers: {\r\n    'Content-Type': 'application/json',\r\n    'Accept': 'application/json',\r\n    'key': bundle.authData.key\r\n  },\r\nbody: JSON.stringify({\r\n  'subscriber_data': {\r\n    'email': bundle.inputData.email,\r\n    'name': bundle.inputData.name, // Případná změna na 'first_name' podle dokumentace API\r\n    'surname': bundle.inputData.surname, // Případná změna na 'last_name' podle dokumentace API\r\n    \r\n    // Další potřebná data dle dokumentace\r\n  },\r\n  'trigger_autoresponders': bundle.inputData.automations,\r\n  'update_existing': true,\r\n})\r\n}\r\n\r\nreturn z.request(options)\r\n  .then((response) => {\r\n    response.throwForStatus();\r\n    const results = response.json;\r\n\r\n    return results;\r\n  });"
+        }
+      }
+    }
+  },
+  "searches": {}
+}
